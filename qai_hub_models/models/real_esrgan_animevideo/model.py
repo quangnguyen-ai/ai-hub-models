@@ -18,13 +18,13 @@ REALESRGAN_SOURCE_REPO_COMMIT = "3b0058bd73742d285dd8831a0d62bbaffeb75d20"
 REALESRGAN_SOURCE_VERSION = 1
 MODEL_ID = __name__.split(".")[-2]
 MODEL_ASSET_VERSION = 2
-DEFAULT_WEIGHTS = "realesr-general-x4v3"
+DEFAULT_WEIGHTS = "realesr-animevideov3"
 PRE_PAD = 10
 SCALING_FACTOR = 4
 
 
-class Real_ESRGAN_General_x4v3(SuperResolutionModel):
-    """Exportable RealESRGAN upscaler, end-to-end."""
+class Real_ESRGAN_AnimeVideo(SuperResolutionModel):
+    """Exportable RealESRGAN anime video upscaler, end-to-end."""
 
     def __init__(
         self,
@@ -38,8 +38,8 @@ class Real_ESRGAN_General_x4v3(SuperResolutionModel):
         cls,
         weight_path: str = DEFAULT_WEIGHTS,
         scale: int = 4,
-    ) -> Real_ESRGAN_General_x4v3:
-        """Load Real_ESRGAN_General_x4v3 from a weightfile created by the source RealESRGAN repository.
+    ) -> Real_ESRGAN_AnimeVideo:
+        """Load Real_ESRGAN_AnimeVideo from a weightfile created by the source RealESRGAN repository.
 
         Args:
             weight_path: Path to weight file or weight name
@@ -55,8 +55,8 @@ class Real_ESRGAN_General_x4v3(SuperResolutionModel):
 def _get_weightsfile_from_name(weights_name: str = DEFAULT_WEIGHTS, scale: int = 4):
     """Convert from names of weights files to the url for the weights file"""
     weights_map = {
-        "realesr-general-x4v3": "https://github.com/xinntao/Real-ESRGAN/releases/download/v0.2.5.0/realesr-general-x4v3.pth",
-        "realesr-general-x2v3": "https://github.com/quangnguyen-ai/Real-ESRGAN/raw/master/weights/realesr-general-x2v3.pth",
+        "realesr-animevideov3": "https://github.com/xinntao/Real-ESRGAN/releases/download/v0.2.5.0/realesr-animevideov3.pth",
+        "realesr-animevideox2v3": "https://github.com/quangnguyen-ai/Real-ESRGAN/raw/master/weights/realesr-animevideox2v3.pth",
     }
 
     if weights_name in weights_map:
@@ -122,11 +122,12 @@ def _load_realesrgan_source_model_from_weights(
         else:
             srvgg_arch = sys.modules["basicsr.archs.srvgg_arch"]
 
+        # Anime video models use XS size (num_conv=16) instead of S size (num_conv=32)
         realesrgan_model = srvgg_arch.SRVGGNetCompact(
             num_in_ch=3,
             num_out_ch=3,
             num_feat=64,
-            num_conv=32,
+            num_conv=16,  # XS size for anime video
             upscale=scale,
             act_type="prelu",
         )

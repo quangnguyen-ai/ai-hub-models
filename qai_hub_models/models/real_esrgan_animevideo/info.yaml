@@ -1,0 +1,40 @@
+name: Real-ESRGAN-AnimeVideo
+id: real_esrgan_animevideo
+status: public
+headline: Upscale anime images and videos with minimal quality loss.
+domain: Computer Vision
+description: Real-ESRGAN AnimeVideo is a machine learning model optimized for upscaling anime content with minimal loss in quality. Supports both 2x and 4x upscaling.
+use_case: Super Resolution
+tags:
+- anime
+- video
+applicable_scenarios:
+- Anime Streaming
+- Gaming
+- Content Creation
+- ARVR
+related_models:
+- esrgan
+- real_esrgan_x4plus
+- real_esrgan_general_x4v3
+form_factors:
+- Phone
+- Tablet
+- IoT
+- XR
+has_static_banner: true
+has_animated_banner: true
+dataset: []
+technical_details:
+  Model checkpoint: realesr-animevideov3
+  Input resolution: 128x128
+  Number of parameters: 0.62M
+  Model size (float): 2.4 MB
+  Model size (w8a8): 0.65 MB
+license_type: bsd-3-clause
+research_paper: https://arxiv.org/abs/2107.10833
+research_paper_title: 'Real-ESRGAN: Training Real-World Blind Super-Resolution with Pure Synthetic Data'
+source_repo: https://github.com/quangnguyen-ai/Real-ESRGAN
+license: https://github.com/xinntao/Real-ESRGAN/blob/master/LICENSE
+deploy_license: https://qaihub-public-assets.s3.us-west-2.amazonaws.com/qai-hub-models/Qualcomm+AI+Hub+Proprietary+License.pdf
+deploy_license_type: ai-hub-models-license

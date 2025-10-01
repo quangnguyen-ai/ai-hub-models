@@ -1,10 +1,8 @@
-# [Real-ESRGAN-General: Upscale images and remove image noise](https://aihub.qualcomm.com/models/real_esrgan_general_x4v3)
+# [Real-ESRGAN-AnimeVideo: Upscale anime images and videos](https://aihub.qualcomm.com/models/real_esrgan_animevideo)
 
-Real-ESRGAN is a machine learning model that upscales an image with minimal loss in quality. This model supports both 2x and 4x upscaling.
+Real-ESRGAN AnimeVideo is a machine learning model optimized for upscaling anime content with minimal loss in quality. This model supports both 2x and 4x upscaling.
 
-This is based on the implementation of Real-ESRGAN-General found [here](https://github.com/quangnguyen-ai/Real-ESRGAN). This repository contains scripts for optimized on-device
-export suitable to run on Qualcomm® devices. More details on model performance
-accross various devices, can be found [here](https://aihub.qualcomm.com/models/real_esrgan_general_x4v3).
+This is based on the implementation of Real-ESRGAN-AnimeVideo found [here](https://github.com/quangnguyen-ai/Real-ESRGAN). This repository contains scripts for optimized on-device export suitable to run on Qualcomm® devices.
 
 [Sign up](https://myaccount.qualcomm.com/signup) to start using Qualcomm AI Hub and run these models on a hosted Qualcomm® device.
 
@@ -15,7 +13,7 @@ accross various devices, can be found [here](https://aihub.qualcomm.com/models/r
 
 Install the package via pip:
 ```bash
-pip install "qai-hub-models[real-esrgan-general-x4v3]"
+pip install "qai-hub-models[real-esrgan-animevideo]"
 ```
 
 
@@ -23,12 +21,12 @@ Once installed, run the following simple CLI demo:
 
 **For 4x upscaling (default):**
 ```bash
-python -m qai_hub_models.models.real_esrgan_general_x4v3.demo { --quantize w8a8 }
+python -m qai_hub_models.models.real_esrgan_animevideo.demo
 ```
 
 **For 2x upscaling:**
 ```bash
-python -m qai_hub_models.models.real_esrgan_general_x4v3.demo --weight-path realesr-general-x2v3 --scale 2 { --quantize w8a8 }
+python -m qai_hub_models.models.real_esrgan_animevideo.demo --weight-path realesr-animevideox2v3 --scale 2
 ```
 
 More details on the CLI tool can be found with the `--help` option. See
@@ -43,19 +41,19 @@ on-device deployment. This can be run as follows:
 
 **For 4x upscaling (default):**
 ```bash
-python -m qai_hub_models.models.real_esrgan_general_x4v3.export --width  640 --height 512 --precision w8a8 
+python -m qai_hub_models.models.real_esrgan_animevideo.export --width 640 --height 512 --precision w8a8
 ```
 
 **For 2x upscaling:**
 ```bash
-python -m qai_hub_models.models.real_esrgan_general_x4v3.export  --weight-path=realesr-general-x2v3 --scale=2 --width  640 --height 512 --precision w8a8 
+python -m qai_hub_models.models.real_esrgan_animevideo.export --weight-path realesr-animevideox2v3 --scale 2 --width 640 --height 512 --precision w8a8
 ```
 
 Additional options are documented with the `--help` option.
 
 
 ## License
-* The license for the original implementation of Real-ESRGAN-General can be found
+* The license for the original implementation of Real-ESRGAN-AnimeVideo can be found
   [here](https://github.com/xinntao/Real-ESRGAN/blob/master/LICENSE).
 * The license for the compiled assets for on-device deployment can be found [here](https://qaihub-public-assets.s3.us-west-2.amazonaws.com/qai-hub-models/Qualcomm+AI+Hub+Proprietary+License.pdf)
 

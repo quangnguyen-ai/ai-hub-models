@@ -16,7 +16,7 @@ import qai_hub as hub
 import torch
 
 from qai_hub_models.models.common import ExportResult, Precision, TargetRuntime
-from qai_hub_models.models.real_esrgan_general_x4v3 import Model
+from qai_hub_models.models.real_esrgan_animevideo import Model
 from qai_hub_models.utils import quantization as quantization_utils
 from qai_hub_models.utils.args import (
     export_parser,
@@ -228,11 +228,11 @@ def export_model(
     # Determine model name based on scale parameter
     scale = additional_model_kwargs.get("scale", 4)
     if scale == 2:
-        model_name = "real_esrgan_general_x2v3"
-        display_name = "Real-ESRGAN-General-x2v3"
+        model_name = "real_esrgan_animevideox2v3"
+        display_name = "Real-ESRGAN-AnimeVideoX2v3"
     else:
-        model_name = "real_esrgan_general_x4v3"
-        display_name = "Real-ESRGAN-General-x4v3"
+        model_name = "real_esrgan_animevideov3"
+        display_name = "Real-ESRGAN-AnimeVideov3"
 
     output_path = Path(output_dir or Path.cwd() / "build" / model_name)
     if not device and not chipset:
