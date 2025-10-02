@@ -57,6 +57,7 @@ def _get_weightsfile_from_name(weights_name: str = DEFAULT_WEIGHTS, scale: int =
     weights_map = {
         "realesr-animevideov3": "https://github.com/xinntao/Real-ESRGAN/releases/download/v0.2.5.0/realesr-animevideov3.pth",
         "realesr-animevideox2v3": "https://github.com/quangnguyen-ai/Real-ESRGAN/raw/master/weights/realesr-animevideox2v3.pth",
+        "smallrealesr-animevideox2v3" :"https://github.com/quangnguyen-ai/Real-ESRGAN/raw/refs/heads/master/weights/smalll-realesr-animevideox2v3.pth",
     }
 
     if weights_name in weights_map:
@@ -123,14 +124,24 @@ def _load_realesrgan_source_model_from_weights(
             srvgg_arch = sys.modules["basicsr.archs.srvgg_arch"]
 
         # Anime video models use XS size (num_conv=16) instead of S size (num_conv=32)
-        realesrgan_model = srvgg_arch.SRVGGNetCompact(
-            num_in_ch=3,
-            num_out_ch=3,
-            num_feat=64,
-            num_conv=16,  # XS size for anime video
-            upscale=scale,
-            act_type="prelu",
-        )
+        if "small" in weights_path:
+            realesrgan_model = srvgg_arch.SRVGGNetCompact(
+                num_in_ch=3,
+                num_out_ch=3,
+                num_feat=32,
+                num_conv=16,  # XS size for anime video
+                upscale=scale,
+                act_type="prelu",
+            )
+        else: 
+            realesrgan_model = srvgg_arch.SRVGGNetCompact(
+                num_in_ch=3,
+                num_out_ch=3,
+                num_feat=64,
+                num_conv=16,  # XS size for anime video
+                upscale=scale,
+                act_type="prelu",
+            )
         pretrained_dict = torch.load(weights_path, map_location=torch.device("cpu"))
 
         if "params_ema" in pretrained_dict:
