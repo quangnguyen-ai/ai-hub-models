@@ -14,7 +14,7 @@ from qai_hub_models.models._shared.super_resolution.model import SuperResolution
 from qai_hub_models.utils.asset_loaders import SourceAsRoot
 
 REALESRGAN_SOURCE_REPOSITORY = "https://github.com/quangnguyen-ai/Real-ESRGAN"
-REALESRGAN_SOURCE_REPO_COMMIT = "274d9031e5600608d617c93815673c4c130f0954"
+REALESRGAN_SOURCE_REPO_COMMIT = "540e683af07e2288fcb968e080df34c7d69bf915"
 REALESRGAN_SOURCE_VERSION = 1
 MODEL_ID = __name__.split(".")[-2]
 MODEL_ASSET_VERSION = 2
