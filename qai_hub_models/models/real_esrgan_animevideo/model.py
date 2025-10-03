@@ -14,7 +14,7 @@ from qai_hub_models.models._shared.super_resolution.model import SuperResolution
 from qai_hub_models.utils.asset_loaders import SourceAsRoot
 
 REALESRGAN_SOURCE_REPOSITORY = "https://github.com/quangnguyen-ai/Real-ESRGAN"
-REALESRGAN_SOURCE_REPO_COMMIT = "3b0058bd73742d285dd8831a0d62bbaffeb75d20"
+REALESRGAN_SOURCE_REPO_COMMIT = "274d9031e5600608d617c93815673c4c130f0954"
 REALESRGAN_SOURCE_VERSION = 1
 MODEL_ID = __name__.split(".")[-2]
 MODEL_ASSET_VERSION = 2
@@ -125,7 +125,7 @@ def _load_realesrgan_source_model_from_weights(
 
         # Anime video models use XS size (num_conv=16) instead of S size (num_conv=32)
         if "small" in weights_path:
-            realesrgan_model = srvgg_arch.SRVGGNetCompact(
+            realesrgan_model = srvgg_arch.SRVGGNetCompactInfer(
                 num_in_ch=3,
                 num_out_ch=3,
                 num_feat=32,
@@ -134,7 +134,7 @@ def _load_realesrgan_source_model_from_weights(
                 act_type="prelu",
             )
         else: 
-            realesrgan_model = srvgg_arch.SRVGGNetCompact(
+            realesrgan_model = srvgg_arch.SRVGGNetCompactInfer(
                 num_in_ch=3,
                 num_out_ch=3,
                 num_feat=64,
