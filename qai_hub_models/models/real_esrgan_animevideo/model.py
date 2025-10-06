@@ -14,7 +14,7 @@ from qai_hub_models.models._shared.super_resolution.model import SuperResolution
 from qai_hub_models.utils.asset_loaders import SourceAsRoot
 
 REALESRGAN_SOURCE_REPOSITORY = "https://github.com/quangnguyen-ai/Real-ESRGAN"
-REALESRGAN_SOURCE_REPO_COMMIT = "540e683af07e2288fcb968e080df34c7d69bf915"
+REALESRGAN_SOURCE_REPO_COMMIT = "0672caa0ad475d9b39f485988db3771f951e7c1b"
 REALESRGAN_SOURCE_VERSION = 1
 MODEL_ID = __name__.split(".")[-2]
 MODEL_ASSET_VERSION = 2
@@ -58,6 +58,7 @@ def _get_weightsfile_from_name(weights_name: str = DEFAULT_WEIGHTS, scale: int =
         "realesr-animevideov3": "https://github.com/xinntao/Real-ESRGAN/releases/download/v0.2.5.0/realesr-animevideov3.pth",
         "realesr-animevideox2v3": "https://github.com/quangnguyen-ai/Real-ESRGAN/raw/master/weights/realesr-animevideox2v3.pth",
         "smallrealesr-animevideox2v3" :"https://github.com/quangnguyen-ai/Real-ESRGAN/raw/refs/heads/master/weights/smalll-realesr-animevideox2v3.pth",
+        "mediumrealesr-animevideox2v3" :"https://github.com/quangnguyen-ai/Real-ESRGAN/raw/refs/heads/master/weights/medium-realesr-animevideox2v3.pth",
     }
 
     if weights_name in weights_map:
@@ -81,6 +82,7 @@ def _load_realesrgan_source_model_from_weights(
         # code references modules via a global scope.
         # CWD should be the repository path now
         realesrgan_repo_path = os.getcwd()
+        
         # The official repo omits this folder, which causes import issues
         version_dir = os.path.join(realesrgan_repo_path, "realesrgan", "version")
         if not os.path.exists(version_dir):
@@ -125,10 +127,19 @@ def _load_realesrgan_source_model_from_weights(
 
         # Anime video models use XS size (num_conv=16) instead of S size (num_conv=32)
         if "small" in weights_path:
-            realesrgan_model = srvgg_arch.SRVGGNetCompactInfer(
+            realesrgan_model = srvgg_arch.SRVGGNetCompact(
                 num_in_ch=3,
                 num_out_ch=3,
                 num_feat=32,
+                num_conv=16,  # XS size for anime video
+                upscale=scale,
+                act_type="prelu",
+            )
+        if "medium" in weights_path:
+            realesrgan_model = srvgg_arch.SRVGGNetCompact(
+                num_in_ch=3,
+                num_out_ch=3,
+                num_feat=48,
                 num_conv=16,  # XS size for anime video
                 upscale=scale,
                 act_type="prelu",
