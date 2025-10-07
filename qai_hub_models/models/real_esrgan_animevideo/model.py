@@ -128,7 +128,7 @@ def _load_realesrgan_source_model_from_weights(
 
         # Anime video models use XS size (num_conv=16) instead of S size (num_conv=32)
         if "nano" in weights_path:
-            realesrgan_model = srvgg_arch.SRVGGNetCompact(
+            realesrgan_model = srvgg_arch.SRVGGNetCompactInfer(
                 num_in_ch=3,
                 num_out_ch=3,
                 num_feat=32,
@@ -136,8 +136,8 @@ def _load_realesrgan_source_model_from_weights(
                 upscale=scale,
                 act_type="prelu",
             )
-        if "medium" in weights_path:
-            realesrgan_model = srvgg_arch.SRVGGNetCompact(
+        elif "medium" in weights_path:
+            realesrgan_model = srvgg_arch.SRVGGNetCompactInfer(
                 num_in_ch=3,
                 num_out_ch=3,
                 num_feat=48,
@@ -145,8 +145,9 @@ def _load_realesrgan_source_model_from_weights(
                 upscale=scale,
                 act_type="prelu",
             )
-        if "small" in weights_path:
-            realesrgan_model = srvgg_arch.SRVGGNetCompact(
+            
+        elif "small" in weights_path:
+            realesrgan_model = srvgg_arch.SRVGGNetCompactInfer(
                 num_in_ch=3,
                 num_out_ch=3,
                 num_feat=32,
