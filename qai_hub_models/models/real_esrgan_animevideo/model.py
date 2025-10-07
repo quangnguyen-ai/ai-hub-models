@@ -57,7 +57,7 @@ def _get_weightsfile_from_name(weights_name: str = DEFAULT_WEIGHTS, scale: int =
     weights_map = {
         "realesr-animevideov3": "https://github.com/xinntao/Real-ESRGAN/releases/download/v0.2.5.0/realesr-animevideov3.pth",
         "realesr-animevideox2v3": "https://github.com/quangnguyen-ai/Real-ESRGAN/raw/master/weights/realesr-animevideox2v3.pth",
-        "smallrealesr-animevideox2v3" :"https://github.com/quangnguyen-ai/Real-ESRGAN/raw/refs/heads/master/weights/smalll-realesr-animevideox2v3.pth",
+        "smallrealesr-animevideox2v3" :"https://github.com/quangnguyen-ai/Real-ESRGAN/raw/refs/heads/master/weights/small-realesr-animevideox2v3.pth",
         "nanorealesr-animevideox2v3" :"https://github.com/quangnguyen-ai/Real-ESRGAN/raw/refs/heads/master/weights/nano-realesr-animevideox2v3.pth",
         "mediumrealesr-animevideox2v3" :"https://github.com/quangnguyen-ai/Real-ESRGAN/raw/refs/heads/master/weights/medium-realesr-animevideox2v3.pth",
     }
