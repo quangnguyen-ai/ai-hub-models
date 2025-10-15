@@ -14,7 +14,28 @@ from qai_hub_models.models._shared.super_resolution.model import SuperResolution
 from qai_hub_models.utils.asset_loaders import SourceAsRoot
 
 REALESRGAN_SOURCE_REPOSITORY = "https://github.com/quangnguyen-ai/Real-ESRGAN"
-REALESRGAN_SOURCE_REPO_COMMIT = "eda9243e2e7f81092217c55e89be8c498647b1ce"
+
+
+def _get_latest_commit() -> str:
+    """Fetch the latest commit hash from the GitHub repository."""
+    import requests
+
+    # Extract owner and repo from the repository URL
+    repo_url = REALESRGAN_SOURCE_REPOSITORY.replace("https://github.com/", "")
+    api_url = f"https://api.github.com/repos/{repo_url}/commits/master"
+
+    try:
+        response = requests.get(api_url, timeout=5)
+        response.raise_for_status()
+        commit_data = response.json()
+        return commit_data["sha"]
+    except Exception as e:
+        # Fallback to a known working commit if API call fails
+        print(f"Warning: Could not fetch latest commit ({e}), using fallback commit")
+        return "41519aef3b55a3dec44b989c4c5fc44e1f9ffd5b"
+
+
+REALESRGAN_SOURCE_REPO_COMMIT = _get_latest_commit()
 REALESRGAN_SOURCE_VERSION = 1
 MODEL_ID = __name__.split(".")[-2]
 MODEL_ASSET_VERSION = 2
@@ -60,6 +81,8 @@ def _get_weightsfile_from_name(weights_name: str = DEFAULT_WEIGHTS, scale: int =
         "smallrealesr-animevideox2v3" :"https://github.com/quangnguyen-ai/Real-ESRGAN/raw/refs/heads/master/weights/small-realesr-animevideox2v3.pth",
         "nanorealesr-animevideox2v3" :"https://github.com/quangnguyen-ai/Real-ESRGAN/raw/refs/heads/master/weights/nano-realesr-animevideox2v3.pth",
         "mediumrealesr-animevideox2v3" :"https://github.com/quangnguyen-ai/Real-ESRGAN/raw/refs/heads/master/weights/medium-realesr-animevideox2v3.pth",
+        "large-grayrealesrx2" :"https://github.com/quangnguyen-ai/Real-ESRGAN/raw/refs/heads/master/weights/large-grayrealesrx2.pth",
+        "small-grayrealesrx2" :"https://github.com/quangnguyen-ai/Real-ESRGAN/raw/refs/heads/master/weights/small-grayrealesrx2.pth",
     }
 
     if weights_name in weights_map:
@@ -127,43 +150,65 @@ def _load_realesrgan_source_model_from_weights(
             srvgg_arch = sys.modules["basicsr.archs.srvgg_arch"]
 
         # Anime video models use XS size (num_conv=16) instead of S size (num_conv=32)
-        if "nano" in weights_path:
-            realesrgan_model = srvgg_arch.SRVGGNetCompactInfer(
-                num_in_ch=3,
-                num_out_ch=3,
-                num_feat=32,
-                num_conv=16,  # XS size for anime video
-                upscale=scale,
-                act_type="prelu",
-            )
-        elif "medium" in weights_path:
-            realesrgan_model = srvgg_arch.SRVGGNetCompactInfer(
-                num_in_ch=3,
-                num_out_ch=3,
-                num_feat=48,
-                num_conv=16,  # XS size for anime video
-                upscale=scale,
-                act_type="prelu",
-            )
+        if "gray" in weights_path: 
             
-        elif "small" in weights_path:
-            realesrgan_model = srvgg_arch.SRVGGNetCompactInfer(
-                num_in_ch=3,
-                num_out_ch=3,
-                num_feat=32,
-                num_conv=32,  # XS size for anime video
-                upscale=scale,
-                act_type="prelu",
-            )
-        else: 
-            realesrgan_model = srvgg_arch.SRVGGNetCompactInfer(
-                num_in_ch=3,
-                num_out_ch=3,
-                num_feat=64,
-                num_conv=16,  # XS size for anime video
-                upscale=scale,
-                act_type="prelu",
-            )
+            if "large" in weights_path:
+                realesrgan_model = srvgg_arch.SRVGGNetCompactInfer(
+                    num_in_ch=1,
+                    num_out_ch=1,
+                    num_feat=64,
+                    num_conv=16,  # XS size for anime video
+                    upscale=scale,
+                    act_type="prelu",
+                )
+                
+            if "small" in weights_path:
+                realesrgan_model = srvgg_arch.SRVGGNetCompactInfer(
+                    num_in_ch=1,
+                    num_out_ch=1,
+                    num_feat=32,
+                    num_conv=32,  # XS size for anime video
+                    upscale=scale,
+                    act_type="prelu",
+                )
+        else:
+            if "nano" in weights_path:
+                realesrgan_model = srvgg_arch.SRVGGNetCompactInfer(
+                    num_in_ch=3,
+                    num_out_ch=3,
+                    num_feat=32,
+                    num_conv=16,  # XS size for anime video
+                    upscale=scale,
+                    act_type="prelu",
+                )
+            elif "medium" in weights_path:
+                realesrgan_model = srvgg_arch.SRVGGNetCompactInfer(
+                    num_in_ch=3,
+                    num_out_ch=3,
+                    num_feat=48,
+                    num_conv=16,  # XS size for anime video
+                    upscale=scale,
+                    act_type="prelu",
+                )
+                
+            elif "small" in weights_path:
+                realesrgan_model = srvgg_arch.SRVGGNetCompactInfer(
+                    num_in_ch=3,
+                    num_out_ch=3,
+                    num_feat=32,
+                    num_conv=32,  # XS size for anime video
+                    upscale=scale,
+                    act_type="prelu",
+                )
+            else: 
+                realesrgan_model = srvgg_arch.SRVGGNetCompactInfer(
+                    num_in_ch=3,
+                    num_out_ch=3,
+                    num_feat=64,
+                    num_conv=16,  # XS size for anime video
+                    upscale=scale,
+                    act_type="prelu",
+                )
         pretrained_dict = torch.load(weights_path, map_location=torch.device("cpu"))
 
         if "params_ema" in pretrained_dict:
