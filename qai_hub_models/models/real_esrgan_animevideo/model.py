@@ -83,6 +83,7 @@ def _get_weightsfile_from_name(weights_name: str = DEFAULT_WEIGHTS, scale: int =
         "mediumrealesr-animevideox2v3" :"https://github.com/quangnguyen-ai/Real-ESRGAN/raw/refs/heads/master/weights/medium-realesr-animevideox2v3.pth",
         "large-grayrealesrx2" :"https://github.com/quangnguyen-ai/Real-ESRGAN/raw/refs/heads/master/weights/large-grayrealesrx2.pth",
         "small-grayrealesrx2" :"https://github.com/quangnguyen-ai/Real-ESRGAN/raw/refs/heads/master/weights/small-grayrealesrx2.pth",
+        "tiny-grayrealesrx2" :"https://github.com/quangnguyen-ai/Real-ESRGAN/raw/refs/heads/master/weights/tiny-grayrealesrx2.pth",
         "nano-grayrealesrx2" :"https://github.com/quangnguyen-ai/Real-ESRGAN/raw/refs/heads/master/weights/nano-grayrealesrx2.pth",
         
     }
@@ -164,7 +165,7 @@ def _load_realesrgan_source_model_from_weights(
                     act_type="prelu",
                 )
                 
-            if "small" in weights_path:
+            elif "small" in weights_path:
                 realesrgan_model = srvgg_arch.SRVGGNetCompactInfer(
                     num_in_ch=1,
                     num_out_ch=1,
@@ -173,12 +174,22 @@ def _load_realesrgan_source_model_from_weights(
                     upscale=scale,
                     act_type="prelu",
                 )
-            if "nano" in weights_path:
+            elif "tiny" in weights_path:
                 realesrgan_model = srvgg_arch.SRVGGNetCompactInfer(
                     num_in_ch=1,
                     num_out_ch=1,
                     num_feat=32,
                     num_conv=16,  # XS size for anime video
+                    upscale=scale,
+                    act_type="prelu",
+                )
+                
+            elif "nano" in weights_path:
+                realesrgan_model = srvgg_arch.SRVGGNetCompactInfer(
+                    num_in_ch=1,
+                    num_out_ch=1,
+                    num_feat=32,
+                    num_conv=12,  # XS size for anime video
                     upscale=scale,
                     act_type="prelu",
                 )
