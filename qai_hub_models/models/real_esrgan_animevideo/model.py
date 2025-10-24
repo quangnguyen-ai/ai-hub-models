@@ -189,7 +189,7 @@ def _load_realesrgan_source_model_from_weights(
                     num_in_ch=1,
                     num_out_ch=1,
                     num_feat=32,
-                    num_conv=12,  # XS size for anime video
+                    num_conv=8,  # XS size for anime video
                     upscale=scale,
                     act_type="prelu",
                 )
