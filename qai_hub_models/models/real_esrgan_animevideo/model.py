@@ -193,6 +193,10 @@ def _load_realesrgan_source_model_from_weights(
                     upscale=scale,
                     act_type="prelu",
                 )
+                
+            elif "mobile" in weights_path:
+                realesrgan_model = srvgg_arch.SRVGGNetMobileInfer(
+                )
         else:
             if "nano" in weights_path:
                 realesrgan_model = srvgg_arch.SRVGGNetCompactInfer(
