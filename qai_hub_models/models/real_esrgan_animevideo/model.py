@@ -85,6 +85,7 @@ def _get_weightsfile_from_name(weights_name: str = DEFAULT_WEIGHTS, scale: int =
         "small-grayrealesrx2" :"https://github.com/quangnguyen-ai/Real-ESRGAN/raw/refs/heads/master/weights/small-grayrealesrx2.pth",
         "tiny-grayrealesrx2" :"https://github.com/quangnguyen-ai/Real-ESRGAN/raw/refs/heads/master/weights/tiny-grayrealesrx2.pth",
         "nano-grayrealesrx2" :"https://github.com/quangnguyen-ai/Real-ESRGAN/raw/refs/heads/master/weights/nano-grayrealesrx2.pth",
+        "mobile-grayrealesrx2" :"https://github.com/quangnguyen-ai/Real-ESRGAN/raw/refs/heads/master/weights/mobile-grayrealesrx2.pth"
         
     }
 
@@ -197,6 +198,7 @@ def _load_realesrgan_source_model_from_weights(
             elif "mobile" in weights_path:
                 realesrgan_model = srvgg_arch.SRVGGNetMobileInfer(
                 )
+                
         else:
             if "nano" in weights_path:
                 realesrgan_model = srvgg_arch.SRVGGNetCompactInfer(
