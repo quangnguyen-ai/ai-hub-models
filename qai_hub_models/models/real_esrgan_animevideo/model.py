@@ -167,13 +167,14 @@ def _load_realesrgan_source_model_from_weights(
                 )
                 
             elif "small" in weights_path:
-                realesrgan_model = srvgg_arch.SRVGGNetCompactInfer(
+                realesrgan_model = srvgg_arch.SRVGGNetMobileInfer(
                     num_in_ch=1,
                     num_out_ch=1,
-                    num_feat=32,
-                    num_conv=32,  # XS size for anime video
+                    num_conv64feat=4, 
+                    num_conv32feat=16,
                     upscale=scale,
                     act_type="prelu",
+                    use_skip=False,
                 )
             elif "tiny" in weights_path:
                 realesrgan_model = srvgg_arch.SRVGGNetCompactInfer(
