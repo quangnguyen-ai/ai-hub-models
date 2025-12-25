@@ -160,7 +160,7 @@ def _load_realesrgan_source_model_from_weights(
                     num_conv32feat=32,
                     upscale=scale,
                     act_type="prelu",
-                    use_skip=False,
+                    use_skip=True,
                 )    
                 
             elif "small" in weights_path:
@@ -168,17 +168,17 @@ def _load_realesrgan_source_model_from_weights(
                     num_in_ch=1,
                     num_out_ch=1,
                     num_conv64feat=4, 
-                    num_conv32feat=16,
+                    num_conv32feat=32,
                     upscale=scale,
                     act_type="prelu",
-                    use_skip=False,
-                )                
-            else: ## (Tiny)
+                    use_skip=True,
+                )           
+            else: ## 
                 realesrgan_model = srvgg_arch.SRVGGNetMobileInfer(
                     num_in_ch=1,
                     num_out_ch=1,
                     num_conv64feat=2,
-                    num_conv32feat=8,
+                    num_conv32feat=16,
                     upscale=scale,
                     act_type="prelu",
                     use_skip= True
