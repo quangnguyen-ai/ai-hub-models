@@ -12,27 +12,20 @@ import torch
 
 from qai_hub_models.models._shared.super_resolution.model import SuperResolutionModel
 from qai_hub_models.utils.asset_loaders import SourceAsRoot
-
+import subprocess 
 REALESRGAN_SOURCE_REPOSITORY = "https://github.com/quangnguyen-ai/Real-ESRGAN"
 
 
 def _get_latest_commit() -> str:
-    """Fetch the latest commit hash from the GitHub repository."""
-    import requests
-
-    # Extract owner and repo from the repository URL
-    repo_url = REALESRGAN_SOURCE_REPOSITORY.replace("https://github.com/", "")
-    api_url = f"https://api.github.com/repos/{repo_url}/commits/master"
-
     try:
-        response = requests.get(api_url, timeout=5)
-        response.raise_for_status()
-        commit_data = response.json()
-        return commit_data["sha"]
+        return subprocess.check_output(
+            ["git", "ls-remote", REALESRGAN_SOURCE_REPOSITORY, "HEAD"],
+            text=True,
+        ).split()[0]
     except Exception as e:
-        # Fallback to a known working commit if API call fails
-        print(f"Warning: Could not fetch latest commit ({e}), using fallback commit")
-        return "41519aef3b55a3dec44b989c4c5fc44e1f9ffd5b"
+        print(f"Warning: git ls-remote failed ({e}), using pinned commit")
+        return "2e2ead76718b03f013314514635576488a2721f6"
+
 
 
 REALESRGAN_SOURCE_REPO_COMMIT = _get_latest_commit()
