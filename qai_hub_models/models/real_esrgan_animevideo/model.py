@@ -179,20 +179,20 @@ def _load_realesrgan_source_model_from_weights(
                     num_in_ch=1,
                     num_out_ch=1,
                     num_conv64feat=2,
-                    num_conv32feat=16,
-                    upscale=scale,
-                    act_type="prelu",
-                    use_skip= True
-                )     
-            else: ## 
-                realesrgan_model = srvgg_arch.SRVGGNetMobileInfer(
-                    num_in_ch=1,
-                    num_out_ch=1,
-                    num_conv64feat=2,
                     num_conv32feat=8,
                     upscale=scale,
                     act_type="relu",
                     use_skip= True
+                )
+            else: ## 
+                realesrgan_model = srvgg_arch.SRVGGNetMobileInfer(
+                    num_in_ch=1,
+                    num_out_ch=1,
+                    num_conv64feat=0,
+                    num_conv32feat=8,
+                    upscale=scale,
+                    act_type="relu",
+                    use_skip= False
                 )
                 
         
