@@ -74,6 +74,7 @@ def _get_weightsfile_from_name(weights_name: str = DEFAULT_WEIGHTS, scale: int =
         "smallrealesr-animevideox2v3" :"https://github.com/quangnguyen-ai/Real-ESRGAN/raw/refs/heads/master/weights/small-realesr-animevideox2v3.pth",
         "nanorealesr-animevideox2v3" :"https://github.com/quangnguyen-ai/Real-ESRGAN/raw/refs/heads/master/weights/nano-realesr-animevideox2v3.pth",
         "mediumrealesr-animevideox2v3" :"https://github.com/quangnguyen-ai/Real-ESRGAN/raw/refs/heads/master/weights/medium-realesr-animevideox2v3.pth",
+        "large-grayrealesrx2" :"https://github.com/quangnguyen-ai/Real-ESRGAN/raw/refs/heads/master/weights/large-grayrealesrx2.pth",
         "small-grayrealesrx2" :"https://github.com/quangnguyen-ai/Real-ESRGAN/raw/refs/heads/master/weights/small-grayrealesrx2.pth",
         "tiny-grayrealesrx2" :"https://github.com/quangnguyen-ai/Real-ESRGAN/raw/refs/heads/master/weights/tiny-grayrealesrx2.pth",
         "nano-grayrealesrx2" :"https://github.com/quangnguyen-ai/Real-ESRGAN/raw/refs/heads/master/weights/nano-grayrealesrx2.pth",
@@ -150,7 +151,7 @@ def _load_realesrgan_source_model_from_weights(
                 realesrgan_model = srvgg_arch.SRVGGNetMobileInfer(
                     num_in_ch=1,
                     num_out_ch=1,
-                    num_conv64feat=8, 
+                    num_conv64feat=4, 
                     num_conv32feat=32,
                     upscale=scale,
                     act_type="prelu",
@@ -161,28 +162,28 @@ def _load_realesrgan_source_model_from_weights(
                 realesrgan_model = srvgg_arch.SRVGGNetMobileInfer(
                     num_in_ch=1,
                     num_out_ch=1,
-                    num_conv64feat=4, 
-                    num_conv32feat=32,
+                    num_conv64feat=2, 
+                    num_conv32feat=8,
                     upscale=scale,
-                    act_type="prelu",
+                    act_type="relu",
                     use_skip=True,
                 )    
             elif "tiny" in weights_path: 
                 realesrgan_model = srvgg_arch.SRVGGNetMobileInfer(
                     num_in_ch=1,
                     num_out_ch=1,
-                    num_conv64feat=2,
+                    num_conv64feat=0,
                     num_conv32feat=8,
                     upscale=scale,
                     act_type="relu",
-                    use_skip= True
+                    use_skip= False
                 )
-            else: ## 
+            else: ##nano
                 realesrgan_model = srvgg_arch.SRVGGNetMobileInfer(
                     num_in_ch=1,
                     num_out_ch=1,
                     num_conv64feat=0,
-                    num_conv32feat=8,
+                    num_conv32feat=3,
                     upscale=scale,
                     act_type="relu",
                     use_skip= False
